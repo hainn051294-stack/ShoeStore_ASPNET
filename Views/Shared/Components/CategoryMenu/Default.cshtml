@@ -1,0 +1,16 @@
+@model List<Category>
+
+<div class="mega-menu-grid">
+    @foreach (var c in Model)
+    {
+        <a asp-controller="Product" asp-action="Index" asp-route-categoryId="@c.Id" class="mega-menu-item">
+            <img src="~/images/brands/@(c.Slug).png" alt="@c.Name" class="brand-logo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='';" />
+            <i class="bi @c.Icon" style="display:none"></i>
+            <div>
+                <strong>@c.Name</strong>
+                <small>@c.Description</small>
+            </div>
+        </a>
+    }
+</div>

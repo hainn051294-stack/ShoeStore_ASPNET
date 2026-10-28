@@ -1,0 +1,89 @@
+@model ProductListViewModel
+@{
+    ViewData["Title"] = "Sản phẩm";
+}
+
+<div class="container section">
+    <div class="section-head">
+        <h2>Danh sách sản phẩm</h2>
+        <p>@Model.TotalItems sản phẩm</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-3">
+            <div class="filter-card">
+                <h5><i class="bi bi-funnel"></i> Bộ lọc</h5>
+                <form method="get" asp-controller="Product" asp-action="Index">
+                    <div class="mb-3">
+                        <label class="form-label">Tìm kiếm</label>
+                        <input type="text" name="q" value="@Model.SearchTerm" class="form-control" placeholder="Tên giày..." />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Thương hiệu</label>
+                        <select name="categoryId" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "Name", Model.CategoryId))">
+                            <option value="">Tất cả</option>
+                        </select>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label">Giá từ</label>
+                            <input type="number" name="minPrice" value="@Model.MinPrice" class="form-control" placeholder="0" />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Đến</label>
+                            <input type="number" name="maxPrice" value="@Model.MaxPrice" class="form-control" placeholder="10.000.000" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Sắp xếp</label>
+                        <select name="sortOrder" class="form-select" asp-items="Model.SortOptions"></select>
+                    </div>
+                    <button type="submit" class="btn btn-hero-primary w-100">Áp dụng</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            @if (Model.Products.Count == 0)
+            {
+                <div class="empty-state">
+                    <i class="bi bi-emoji-frown"></i>
+                    <p>Không tìm thấy sản phẩm phù hợp.</p>
+                </div>
+            }
+            <div class="row g-4">
+                @foreach (var p in Model.Products)
+                {
+                    <div class="col-6 col-md-4">
+                        <partial name="_ProductCard" model="p" />
+                    </div>
+                }
+            </div>
+
+            @if (Model.TotalPages > 1)
+            {
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                            <a class="page-link" asp-route-q="@Model.SearchTerm" asp-route-categoryId="@Model.CategoryId"
+                               asp-route-minPrice="@Model.MinPrice" asp-route-maxPrice="@Model.MaxPrice"
+                               asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Page - 1)">Trước</a>
+                        </li>
+                        @for (var i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.Page ? "active" : "")">
+                                <a class="page-link" asp-route-q="@Model.SearchTerm" asp-route-categoryId="@Model.CategoryId"
+                                   asp-route-minPrice="@Model.MinPrice" asp-route-maxPrice="@Model.MaxPrice"
+                                   asp-route-sortOrder="@Model.SortOrder" asp-route-page="@i">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                            <a class="page-link" asp-route-q="@Model.SearchTerm" asp-route-categoryId="@Model.CategoryId"
+                               asp-route-minPrice="@Model.MinPrice" asp-route-maxPrice="@Model.MaxPrice"
+                               asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Page + 1)">Sau</a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+</div>

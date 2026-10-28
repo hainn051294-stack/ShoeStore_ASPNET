@@ -1,0 +1,44 @@
+@model Product
+@{
+    var img = string.IsNullOrEmpty(Model.MainImage) ? "/images/products/placeholder.svg" : Model.MainImage;
+}
+
+<div class="product-card">
+    <a asp-controller="Product" asp-action="Details" asp-route-slug="@Model.Slug" class="card-link">
+        <div class="card-img-wrap">
+            <img src="@img" alt="@Model.Name" loading="lazy" onerror="this.src='/images/products/placeholder.svg'" />
+            @if (Model.IsOnSale)
+            {
+                var percent = (int)Math.Round((1 - Model.SalePrice!.Value / Model.Price) * 100);
+                <span class="badge-sale">-@percent%</span>
+            }
+            else if (!Model.InStock)
+            {
+                <span class="badge-out">Hết hàng</span>
+            }
+        </div>
+        <div class="card-body">
+            <span class="card-brand">@Model.Category.Name</span>
+            <h3 class="card-name">@Model.Name</h3>
+            <div class="card-price">
+                @if (Model.IsOnSale)
+                {
+                    <span class="price-new">@FormatHelper.Vnd(Model.DisplayPrice)</span>
+                    <span class="price-old">@FormatHelper.Vnd(Model.Price)</span>
+                }
+                else
+                {
+                    <span class="price-new">@FormatHelper.Vnd(Model.Price)</span>
+                }
+            </div>
+        </div>
+    </a>
+    <form asp-controller="Cart" asp-action="Add" method="post" class="card-add-form">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="productId" value="@Model.Id" />
+        <input type="hidden" name="quantity" value="1" />
+        <button type="submit" class="btn-card-add" @(Model.InStock ? "" : "disabled")>
+            <i class="bi bi-bag-plus"></i> Thêm vào giỏ
+        </button>
+    </form>
+</div>

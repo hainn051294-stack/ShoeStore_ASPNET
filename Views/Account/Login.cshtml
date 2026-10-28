@@ -1,0 +1,41 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="auth-wrap">
+    <div class="auth-card">
+        <h2 class="auth-title">Chào mừng trở lại 👋</h2>
+        <p class="auth-sub">Đăng nhập để mua sắm và theo dõi đơn hàng</p>
+        <form asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" placeholder="email@example.com" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" placeholder="••••••••" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="form-check">
+                    <input asp-for="RememberMe" class="form-check-input" />
+                    <label asp-for="RememberMe" class="form-check-label">Ghi nhớ</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-hero-primary w-100">Đăng nhập</button>
+        </form>
+        <p class="auth-alt">Chưa có tài khoản? <a asp-action="Register">Đăng ký ngay</a></p>
+        <div class="demo-hint">
+            <small>Demo: <b>admin@shopgiay.vn / Admin@123</b> — <b>user@shopgiay.vn / User@123</b></small>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

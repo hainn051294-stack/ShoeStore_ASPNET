@@ -1,0 +1,61 @@
+@model CheckoutViewModel
+@{
+    var cart = (CartViewModel)ViewBag.Cart;
+    ViewData["Title"] = "Thanh toán";
+}
+
+<div class="container section">
+    <h2 class="mb-4"><i class="bi bi-credit-card"></i> Thanh toán</h2>
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="summary-card">
+                <h5>Thông tin giao hàng</h5>
+                <form asp-action="Index" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+                    <div class="mb-3">
+                        <label asp-for="ReceiverName" class="form-label"></label>
+                        <input asp-for="ReceiverName" class="form-control" />
+                        <span asp-validation-for="ReceiverName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Phone" class="form-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Address" class="form-label"></label>
+                        <input asp-for="Address" class="form-control" placeholder="Số nhà, đường, phường/xã, quận/huyện..." />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Note" class="form-label"></label>
+                        <textarea asp-for="Note" class="form-control" rows="2" placeholder="Ghi chú cho người bán (tùy chọn)"></textarea>
+                    </div>
+                    <div class="alert alert-light border">💳 Phương thức: <strong>Thanh toán khi nhận hàng (COD)</strong></div>
+                    <button type="submit" class="btn btn-hero-primary w-100">Đặt hàng</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="summary-card">
+                <h5>Đơn hàng của bạn</h5>
+                @foreach (var item in cart.Items)
+                {
+                    <div class="summary-row">
+                        <span>@item.ProductName <small class="text-muted">× @item.Quantity @(item.Size != null ? $"(size {item.Size})" : "")</small></span>
+                        <strong>@FormatHelper.Vnd(item.LineTotal)</strong>
+                    </div>
+                }
+                <hr />
+                <div class="summary-row"><span>Tạm tính</span><strong>@FormatHelper.Vnd(cart.SubTotal)</strong></div>
+                <div class="summary-row"><span>Phí giao hàng</span><strong>@(cart.ShippingFee == 0 ? "Miễn phí" : FormatHelper.Vnd(cart.ShippingFee))</strong></div>
+                <div class="summary-row total"><span>Tổng cộng</span><strong class="text-gradient">@FormatHelper.Vnd(cart.Total)</strong></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

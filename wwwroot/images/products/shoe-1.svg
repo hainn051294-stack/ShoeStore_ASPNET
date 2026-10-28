@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+  <rect width="400" height="260" fill="#f8f7fc" rx="24"/>
+  <path d="M40 180 Q60 120 130 110 Q180 100 210 70 Q240 45 280 55 Q330 68 350 110 Q365 140 360 175 Q358 195 330 195 L70 195 Q42 195 40 180 Z" fill="#111827"/>
+  <path d="M40 180 Q60 120 130 110 Q180 100 210 70 Q240 45 280 55 Q330 68 350 110 L348 120 Q300 100 240 118 Q160 140 90 150 Q55 156 44 185 Z" fill="#7c3aed"/>
+  <rect x="40" y="180" width="320" height="16" rx="8" fill="#fff" stroke="#e5e7eb"/>
+  <circle cx="200" cy="185" r="30" fill="#ec4899" opacity=".9"/>
+  <text x="330" y="230" font-family="sans-serif" font-size="14" fill="#9ca3af" text-anchor="end">SneakerHub</text>
+</svg>

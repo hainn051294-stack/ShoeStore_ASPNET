@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Liên hệ";
+}
+
+<div class="container section">
+    <div class="section-head">
+        <h2>Liên hệ</h2>
+        <p>Chúng tôi luôn sẵn sàng lắng nghe bạn</p>
+    </div>
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="summary-card h-100">
+                <h5>Thông tin liên hệ</h5>
+                <p class="mb-2"><i class="bi bi-geo-alt text-gradient"></i> 273 An Dương Vương, Quận 5, TP. Hồ Chí Minh</p>
+                <p class="mb-2"><i class="bi bi-telephone text-gradient"></i> 1900 1234</p>
+                <p class="mb-2"><i class="bi bi-envelope text-gradient"></i> support@sneakerhub.vn</p>
+                <p class="mb-0"><i class="bi bi-clock text-gradient"></i> 8:00 - 22:00 hằng ngày</p>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="summary-card h-100">
+                <h5>Gửi tin nhắn</h5>
+                <form asp-action="Contact" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Họ tên</label>
+                            <input type="text" name="name" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nội dung</label>
+                        <textarea name="message" class="form-control" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-hero-primary"><i class="bi bi-send"></i> Gửi tin nhắn</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

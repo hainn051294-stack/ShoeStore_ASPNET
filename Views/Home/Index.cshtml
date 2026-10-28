@@ -1,0 +1,93 @@
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center hero-row">
+            <div class="col-lg-6 hero-text">
+                <span class="hero-badge">🔥 Sale up to 30% — sneaker chính hãng</span>
+                <h1 class="hero-title"><span class="text-gradient">Nâng tầm phong cách</span><br><span class="text-gradient">cùng sneaker</span></h1>
+                <p class="hero-sub">Bộ sưu tập giày chính hãng Nike, Adidas, Jordan, New Balance... Giá tốt nhất thị trường, bảo hành 6 tháng.</p>
+                <div class="hero-actions">
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-hero-primary">Mua ngay</a>
+                    <a asp-controller="Home" asp-action="About" class="btn btn-hero-outline">Về SneakerHub</a>
+                </div>
+                <div class="hero-stats">
+                    <div><strong>18+</strong><span>Mẫu giày hot</span></div>
+                    <div><strong>8</strong><span>Thương hiệu</span></div>
+                    <div><strong>1k+</strong><span>Khách hàng</span></div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center hero-visual">
+                <a asp-controller="Product" asp-action="Details" asp-route-slug="converse-chuck-taylor-all-star-classic" class="hero-banner" title="Xem chi tiết Converse Chuck Taylor All Star Classic">
+                    <span class="hero-sale-badge">-13%</span>
+                    <img src="~/images/products/converse-chuck-taylor-all-star-classic-red/1.jpg" alt="Converse Chuck Taylor All Star Classic" class="hero-img float-anim" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="promo-marquee">
+    <div class="marquee-track">
+        @for (var i = 0; i < 2; i++)
+        {
+            <span>🚚 Miễn phí giao hàng từ 2 triệu &nbsp;•&nbsp; 🎁 Quà tặng khi mua giày Nike &nbsp;•&nbsp; 💳 COD toàn quốc &nbsp;•&nbsp; 🔄 Đổi trả trong 7 ngày &nbsp;•&nbsp;</span>
+        }
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2>Thương hiệu nổi bật</h2>
+            <p>Chọn thương hiệu yêu thích của bạn</p>
+        </div>
+        <div class="brand-grid">
+            @foreach (var c in Model.Categories)
+            {
+                <a asp-controller="Product" asp-action="Index" asp-route-categoryId="@c.Id" class="brand-card">
+                    <img src="~/images/brands/@(c.Slug).png" alt="@c.Name" class="brand-logo"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='';" />
+                    <i class="bi @c.Icon" style="display:none"></i>
+                    <span>@c.Name</span>
+                </a>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2>Sản phẩm nổi bật</h2>
+            <a asp-controller="Product" asp-action="Index" class="see-all">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="row g-4">
+            @foreach (var p in Model.FeaturedProducts)
+            {
+                <div class="col-6 col-md-4 col-lg-3">
+                    <partial name="_ProductCard" model="p" />
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <div class="container">
+        <div class="section-head">
+            <h2>Mới cập nhật</h2>
+            <a asp-controller="Product" asp-action="Index" asp-route-sortOrder="newest" class="see-all">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="row g-4">
+            @foreach (var p in Model.NewestProducts)
+            {
+                <div class="col-6 col-md-4 col-lg-3">
+                    <partial name="_ProductCard" model="p" />
+                </div>
+            }
+        </div>
+    </div>
+</section>

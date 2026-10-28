@@ -1,0 +1,37 @@
+@model Order
+@{
+    ViewData["Title"] = "Đơn hàng " + Model.OrderCode;
+}
+
+<div class="container section">
+    <div class="summary-card mx-auto" style="max-width: 760px;">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">@Model.OrderCode</h4>
+            <span class="badge @FormatHelper.StatusClass(Model.Status)">@FormatHelper.StatusText(Model.Status)</span>
+        </div>
+        <hr />
+        <h6>Thông tin giao hàng</h6>
+        <p class="mb-1"><strong>@Model.ReceiverName</strong> — @Model.Phone</p>
+        <p class="text-muted">@Model.Address</p>
+        @if (!string.IsNullOrEmpty(Model.Note))
+        {
+            <p class="text-muted"><em>Ghi chú: @Model.Note</em></p>
+        }
+        <p class="text-muted small">Đặt lúc @Model.CreatedAt:dd/MM/yyyy HH:mm — Thanh toán: @Model.PaymentMethod</p>
+        <hr />
+        <h6>Sản phẩm</h6>
+        @foreach (var d in Model.Details)
+        {
+            <div class="summary-row">
+                <span>
+                    @d.ProductName
+                    <small class="text-muted">× @d.Quantity @(d.Color != null ? $"— {d.Color}" : "") @(d.Size != null ? $"— size {d.Size}" : "")</small>
+                </span>
+                <strong>@FormatHelper.Vnd(d.LineTotal)</strong>
+            </div>
+        }
+        <hr />
+        <div class="summary-row total"><span>Tổng cộng</span><strong class="text-gradient">@FormatHelper.Vnd(Model.TotalAmount)</strong></div>
+        <a asp-action="Index" class="btn btn-hero-outline w-100 mt-3">← Đơn hàng của tôi</a>
+    </div>
+</div>
