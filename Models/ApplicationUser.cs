@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace ShopBangGiay.Models;
+namespace ShopBanGiay.Models;
 
 public class ApplicationUser : IdentityUser
 {

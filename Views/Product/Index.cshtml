@@ -24,6 +24,14 @@
                             <option value="">Tất cả</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giày nam / nữ</label>
+                        <select name="gender" class="form-select">
+                            <option value="" selected="@(string.IsNullOrEmpty(Model.Gender))">Tất cả</option>
+                            <option value="Nam" selected="@(Model.Gender == "Nam")">Giày nam</option>
+                            <option value="Nữ" selected="@(Model.Gender == "Nữ")">Giày nữ</option>
+                        </select>
+                    </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <label class="form-label">Giá từ</label>
@@ -65,6 +73,7 @@
                     <ul class="pagination justify-content-center">
                         <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
                             <a class="page-link" asp-route-q="@Model.SearchTerm" asp-route-categoryId="@Model.CategoryId"
+                               asp-route-gender="@Model.Gender"
                                asp-route-minPrice="@Model.MinPrice" asp-route-maxPrice="@Model.MaxPrice"
                                asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Page - 1)">Trước</a>
                         </li>
@@ -72,12 +81,14 @@
                         {
                             <li class="page-item @(i == Model.Page ? "active" : "")">
                                 <a class="page-link" asp-route-q="@Model.SearchTerm" asp-route-categoryId="@Model.CategoryId"
+                                   asp-route-gender="@Model.Gender"
                                    asp-route-minPrice="@Model.MinPrice" asp-route-maxPrice="@Model.MaxPrice"
                                    asp-route-sortOrder="@Model.SortOrder" asp-route-page="@i">@i</a>
                             </li>
                         }
                         <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
                             <a class="page-link" asp-route-q="@Model.SearchTerm" asp-route-categoryId="@Model.CategoryId"
+                               asp-route-gender="@Model.Gender"
                                asp-route-minPrice="@Model.MinPrice" asp-route-maxPrice="@Model.MaxPrice"
                                asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Page + 1)">Sau</a>
                         </li>

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using ShopBangGiay.Data;
-using ShopBangGiay.Models;
+using ShopBanGiay.Data;
+using ShopBanGiay.Models;
 
-namespace ShopBangGiay.Controllers;
+namespace ShopBanGiay.Controllers;
 
 public class HomeController : Controller
 {

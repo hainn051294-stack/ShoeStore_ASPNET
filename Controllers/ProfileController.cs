@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using ShopBangGiay.Data;
-using ShopBangGiay.Models;
-using ShopBangGiay.ViewModels;
+using ShopBanGiay.Data;
+using ShopBanGiay.Models;
+using ShopBanGiay.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
-namespace ShopBangGiay.Controllers;
+namespace ShopBanGiay.Controllers;
 
 [Authorize]
 public class ProfileController : Controller

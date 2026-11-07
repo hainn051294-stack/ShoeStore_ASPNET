@@ -1,8 +1,8 @@
-using ShopBangGiay.Data;
+using ShopBanGiay.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace ShopBangGiay.ViewComponents;
+namespace ShopBanGiay.ViewComponents;
 
 public class CategoryMenuViewComponent : ViewComponent
 {

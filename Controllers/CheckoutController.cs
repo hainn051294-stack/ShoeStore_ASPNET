@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using ShopBangGiay.Services;
+using ShopBanGiay.Services;
 using Microsoft.EntityFrameworkCore;
-using ShopBangGiay.ViewModels;
+using ShopBanGiay.ViewModels;
 
-namespace ShopBangGiay.Controllers;
+namespace ShopBanGiay.Controllers;
 
 [Authorize]
 public class CheckoutController : Controller
@@ -70,7 +70,7 @@ public class CheckoutController : Controller
     public async Task<IActionResult> Success(string code)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-        var db = HttpContext.RequestServices.GetRequiredService<ShopBangGiay.Data.ApplicationDbContext>();
+        var db = HttpContext.RequestServices.GetRequiredService<ShopBanGiay.Data.ApplicationDbContext>();
 
         var order = await db.Orders
             .Include(o => o.Details)

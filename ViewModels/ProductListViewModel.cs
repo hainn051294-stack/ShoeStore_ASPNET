@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ShopBangGiay.ViewModels;
+namespace ShopBanGiay.ViewModels;
 
 public class ProductListViewModel
 {
@@ -9,6 +9,7 @@ public class ProductListViewModel
 
     public string? SearchTerm { get; set; }
     public int? CategoryId { get; set; }
+    public string? Gender { get; set; }
     public decimal? MinPrice { get; set; }
     public decimal? MaxPrice { get; set; }
     public string? SortOrder { get; set; }

@@ -1,4 +1,4 @@
-namespace ShopBangGiay.ViewModels;
+namespace ShopBanGiay.ViewModels;
 
 public class CartViewModel
 {

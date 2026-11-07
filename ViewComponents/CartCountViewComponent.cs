@@ -1,8 +1,8 @@
 using System.Security.Claims;
-using ShopBangGiay.Services;
+using ShopBanGiay.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ShopBangGiay.ViewComponents;
+namespace ShopBanGiay.ViewComponents;
 
 public class CartCountViewComponent : ViewComponent
 {

@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using ShopBangGiay.Data;
-using ShopBangGiay.Models;
-using ShopBangGiay.Services;
-using ShopBangGiay.ViewModels;
+using ShopBanGiay.Data;
+using ShopBanGiay.Models;
+using ShopBanGiay.Services;
+using ShopBanGiay.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
-namespace ShopBangGiay.Controllers;
+namespace ShopBanGiay.Controllers;
 
 public class AccountController : Controller
 {

@@ -18,7 +18,10 @@
             }
         </div>
         <div class="card-body">
-            <span class="card-brand">@Model.Category.Name</span>
+            <div class="card-meta">
+                <span class="card-brand">@Model.Category.Name</span>
+                <span class="badge-gender @(Model.Gender == "Nữ" ? "nu" : "nam")">@Model.Gender</span>
+            </div>
             <h3 class="card-name">@Model.Name</h3>
             <div class="card-price">
                 @if (Model.IsOnSale)

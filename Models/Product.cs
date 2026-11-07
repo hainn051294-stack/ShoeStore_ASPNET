@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ShopBangGiay.Models;
+namespace ShopBanGiay.Models;
 
 public class Product
 {
@@ -35,6 +35,9 @@ public class Product
 
     [StringLength(200)]
     public string? SizeOptions { get; set; }
+
+    [StringLength(10)]
+    public string Gender { get; set; } = "Nam";
 
     public bool IsFeatured { get; set; }
     public bool IsActive { get; set; } = true;

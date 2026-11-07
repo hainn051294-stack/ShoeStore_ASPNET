@@ -15,20 +15,23 @@
 
     <div class="row g-5 detail-row">
         <div class="col-lg-6">
-            <img src="@img" alt="@p.Name" class="detail-img" id="mainImage" onerror="this.src='/images/products/placeholder.svg'" />
-            @if (Model.Product.Images.Count > 1)
-            {
-                <div class="gallery-thumbs mt-3" id="galleryThumbs">
-                    @foreach (var image in Model.Product.Images)
-                    {
-                        <img src="@image.Url" data-color="@image.Color" class="thumb"
-                             onclick="setMainImage(this)" onerror="this.src='/images/products/placeholder.svg'" />
-                    }
-                </div>
-            }
+            <div class="detail-gallery">
+                @if (Model.Product.Images.Count > 1)
+                {
+                    <div class="gallery-thumbs vertical" id="galleryThumbs">
+                        @foreach (var image in Model.Product.Images)
+                        {
+                            <img src="@image.Url" data-color="@image.Color" class="thumb"
+                                 onclick="setMainImage(this)" onerror="this.src='/images/products/placeholder.svg'" />
+                        }
+                    </div>
+                }
+                <img src="@img" alt="@p.Name" class="detail-img" id="mainImage" onerror="this.src='/images/products/placeholder.svg'" />
+            </div>
         </div>
         <div class="col-lg-6">
             <span class="card-brand">@p.Category.Name</span>
+            <span class="badge-gender @(p.Gender == "Nữ" ? "nu" : "nam")" style="margin-left:8px">@p.Gender</span>
             <h1 class="detail-name">@p.Name</h1>
             <p class="text-muted">@p.ShortDescription</p>
             <div class="detail-price">
@@ -168,6 +171,12 @@
             }
 
             colorInputs.forEach(i => i.addEventListener('change', applyColor));
+
+            // Màu mặc định = màu của thumbnail đầu tiên (ô trên cùng cột trái)
+            const firstThumbColor = thumbs[0]?.dataset.color;
+            const defaultInput = colorInputs.find(i => i.value === firstThumbColor)
+                || colorInputs.find(i => i.checked);
+            if (defaultInput) defaultInput.checked = true;
             applyColor();
         })();
 
@@ -175,14 +184,22 @@
             e.preventDefault();
             const form = e.target;
             const fd = new FormData(form);
-            fd.append('__RequestVerificationToken', form.querySelector('[name="__RequestVerificationToken"]').value);
-            const res = await fetch('@Url.Action("Add", "Cart")', { method: 'POST', body: fd });
-            const data = await res.json();
-            alert(data.message);
-            if (data.success) {
-                const badge = document.getElementById('cartBadge');
-                if (badge && data.cartCount !== undefined) badge.textContent = data.cartCount;
-                form.reset();
+            try {
+                const res = await fetch('@Url.Action("Add", "Cart")', {
+                    method: 'POST',
+                    body: fd,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                const data = await res.json();
+                alert(data.message);
+                if (data.success) {
+                    const badge = document.getElementById('cartBadge');
+                    if (badge && data.cartCount !== undefined) badge.textContent = data.cartCount;
+                    form.reset();
+                }
+            } catch (err) {
+                // Phan hoi khong phai JSON -> chuyen thong thuong sang trang gio hang
+                window.location.href = '@Url.Action("Index", "Cart")';
             }
         });
     </script>

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ShopBangGiay.ViewModels;
+namespace ShopBanGiay.ViewModels;
 
 public class ProfileViewModel
 {

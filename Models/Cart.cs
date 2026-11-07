@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ShopBangGiay.Models;
+namespace ShopBanGiay.Models;
 
 public class Cart
 {

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
-using ShopBangGiay.Services;
+using ShopBanGiay.Services;
 
-namespace ShopBangGiay.Controllers;
+namespace ShopBanGiay.Controllers;
 
 public class CartController : Controller
 {
@@ -65,12 +65,12 @@ public class CartController : Controller
         return Json(new { count });
     }
 
-    private async Task EnrichSessionCartAsync(ShopBangGiay.ViewModels.CartViewModel cart)
+    private async Task EnrichSessionCartAsync(ShopBanGiay.ViewModels.CartViewModel cart)
     {
         var productIds = cart.Items.Select(i => i.ProductId).Distinct().ToList();
         if (productIds.Count == 0) return;
 
-        var db = HttpContext.RequestServices.GetRequiredService<ShopBangGiay.Data.ApplicationDbContext>();
+        var db = HttpContext.RequestServices.GetRequiredService<ShopBanGiay.Data.ApplicationDbContext>();
         var products = await db.Products
             .Where(p => productIds.Contains(p.Id))
             .ToDictionaryAsync(p => p.Id);

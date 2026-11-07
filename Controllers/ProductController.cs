@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ShopBangGiay.Data;
-using ShopBangGiay.Helpers;
-using ShopBangGiay.ViewModels;
+using ShopBanGiay.Data;
+using ShopBanGiay.Helpers;
+using ShopBanGiay.ViewModels;
 
-namespace ShopBangGiay.Controllers;
+namespace ShopBanGiay.Controllers;
 
 public class ProductController : Controller
 {
@@ -15,7 +15,7 @@ public class ProductController : Controller
         _db = db;
     }
 
-    public async Task<IActionResult> Index(string? q, int? categoryId, decimal? minPrice,
+    public async Task<IActionResult> Index(string? q, int? categoryId, string? gender, decimal? minPrice,
         decimal? maxPrice, string? sortOrder, int page = 1)
     {
         var pageSize = 9;
@@ -29,6 +29,9 @@ public class ProductController : Controller
 
         if (categoryId.HasValue)
             query = query.Where(p => p.CategoryId == categoryId.Value);
+
+        if (!string.IsNullOrWhiteSpace(gender) && (gender == "Nam" || gender == "Nữ"))
+            query = query.Where(p => p.Gender == gender);
 
         if (minPrice.HasValue)
             query = query.Where(p => p.DisplayPrice >= minPrice.Value);
@@ -64,6 +67,7 @@ public class ProductController : Controller
             Categories = categories,
             SearchTerm = q,
             CategoryId = categoryId,
+            Gender = gender,
             MinPrice = minPrice,
             MaxPrice = maxPrice,
             SortOrder = sortOrder,

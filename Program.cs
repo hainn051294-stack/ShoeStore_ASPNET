@@ -1,7 +1,7 @@
-using ShopBangGiay.Data;
-using ShopBangGiay.Helpers;
-using ShopBangGiay.Models;
-using ShopBangGiay.Services;
+using ShopBanGiay.Data;
+using ShopBanGiay.Helpers;
+using ShopBanGiay.Models;
+using ShopBanGiay.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 

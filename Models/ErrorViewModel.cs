@@ -1,4 +1,4 @@
-namespace ShopBangGiay.Models;
+namespace ShopBanGiay.Models;
 
 public class ErrorViewModel
 {
