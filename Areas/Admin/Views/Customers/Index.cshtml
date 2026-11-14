@@ -1,0 +1,26 @@
+@model List<ApplicationUser>
+@{
+    ViewData["Title"] = "Khách hàng";
+    var orderCounts = (Dictionary<string, int>)ViewBag.OrderCounts;
+}
+
+<div class="admin-card">
+    <div class="table-responsive">
+        <table class="table admin-table">
+            <thead><tr><th>Họ tên</th><th>Email</th><th>SĐT</th><th>Địa chỉ</th><th>Số đơn</th><th></th></tr></thead>
+            <tbody>
+                @foreach (var u in Model)
+                {
+                    <tr>
+                        <td><strong>@u.FullName</strong></td>
+                        <td>@u.Email</td>
+                        <td>@u.PhoneNumber</td>
+                        <td>@u.Address</td>
+                        <td><span class="badge bg-primary">@orderCounts.GetValueOrDefault(u.Id, 0)</span></td>
+                        <td><a asp-action="Details" asp-route-id="@u.Id" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

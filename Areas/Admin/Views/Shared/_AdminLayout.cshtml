@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Quản trị SneakerHub</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="admin-wrap">
+        <aside class="admin-sidebar">
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="admin-brand">
+                <i class="bi bi-lightning-charge-fill"></i> SneakerHub
+            </a>
+            <ul>
+                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                <li><a asp-area="Admin" asp-controller="Products" asp-action="Index"><i class="bi bi-box"></i> Sản phẩm</a></li>
+                <li><a asp-area="Admin" asp-controller="Categories" asp-action="Index"><i class="bi bi-tags"></i> Thương hiệu</a></li>
+                <li><a asp-area="Admin" asp-controller="Orders" asp-action="Index"><i class="bi bi-receipt"></i> Đơn hàng</a></li>
+                <li><a asp-area="Admin" asp-controller="Customers" asp-action="Index"><i class="bi bi-people"></i> Khách hàng</a></li>
+                <li><a asp-area="Admin" asp-controller="Statistics" asp-action="Index"><i class="bi bi-bar-chart"></i> Thống kê</a></li>
+                <li class="mt-auto"><a asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house"></i> Về website</a></li>
+            </ul>
+        </aside>
+        <main class="admin-main">
+            <div class="admin-topbar">
+                <h1>@ViewData["Title"]</h1>
+                <span><i class="bi bi-person-circle"></i> @User.Identity!.Name</span>
+            </div>
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]<button class="btn-close" data-bs-dismiss="alert"></button></div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show">@TempData["Error"]<button class="btn-close" data-bs-dismiss="alert"></button></div>
+            }
+            @if (TempData["Warning"] != null)
+            {
+                <div class="alert alert-warning alert-dismissible fade show">@TempData["Warning"]<button class="btn-close" data-bs-dismiss="alert"></button></div>
+            }
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

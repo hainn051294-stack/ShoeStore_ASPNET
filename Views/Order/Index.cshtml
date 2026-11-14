@@ -22,7 +22,7 @@
                 <a asp-action="Details" asp-route-id="@order.Id" class="order-row">
                     <div>
                         <strong>@order.OrderCode</strong>
-                        <small class="text-muted d-block">@order.CreatedAt:dd/MM/yyyy HH:mm — @order.Details.Count sản phẩm</small>
+                        <small class="text-muted d-block">@(order.CreatedAt.ToString("dd/MM/yyyy HH:mm")) — @order.Details.Count sản phẩm</small>
                     </div>
                     <div class="text-end">
                         <span class="badge @FormatHelper.StatusClass(order.Status)">@FormatHelper.StatusText(order.Status)</span>

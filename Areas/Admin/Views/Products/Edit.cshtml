@@ -1,0 +1,103 @@
+@model AdminProductViewModel
+@{
+    ViewData["Title"] = "Sửa sản phẩm";
+    var existingImages = (List<ProductImage>?)ViewBag.ExistingImages ?? new();
+    var mainImage = (string?)ViewBag.MainImage;
+}
+
+<div class="admin-card" style="max-width: 860px;">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="CategoryId" class="form-label"></label>
+                <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryOptions"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="Price" class="form-label"></label>
+                <input asp-for="Price" class="form-control" type="number" step="1000" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label asp-for="SalePrice" class="form-label"></label>
+                <input asp-for="SalePrice" class="form-control" type="number" step="1000" />
+                <span asp-validation-for="SalePrice" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="Stock" class="form-label"></label>
+                <input asp-for="Stock" class="form-control" type="number" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Ảnh hiện tại</label>
+                <div>
+                    <img src="@(mainImage ?? "/images/products/placeholder.svg")" class="admin-thumb-lg" onerror="this.src='/images/products/placeholder.svg'" />
+                </div>
+                <label asp-for="MainImageFile" class="form-label mt-2"></label>
+                <input asp-for="MainImageFile" class="form-control" type="file" accept="image/*" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="ColorOptions" class="form-label"></label>
+                <input asp-for="ColorOptions" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="SizeOptions" class="form-label"></label>
+                <input asp-for="SizeOptions" class="form-control" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ShortDescription" class="form-label"></label>
+            <input asp-for="ShortDescription" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Specifications" class="form-label"></label>
+            <textarea asp-for="Specifications" class="form-control" rows="3"></textarea>
+        </div>
+        @if (existingImages.Count > 0)
+        {
+            <div class="mb-3">
+                <label class="form-label">Gallery hiện tại</label>
+                <div class="d-flex gap-2 flex-wrap">
+                    @foreach (var img in existingImages)
+                    {
+                        <img src="@img.Url" class="admin-thumb" onerror="this.src='/images/products/placeholder.svg'" />
+                    }
+                </div>
+            </div>
+        }
+        <div class="mb-3">
+            <label asp-for="GalleryFiles" class="form-label"></label>
+            <input asp-for="GalleryFiles" class="form-control" type="file" accept="image/*" multiple />
+        </div>
+        <div class="form-check form-switch mb-3">
+            <input asp-for="IsFeatured" class="form-check-input" />
+            <label asp-for="IsFeatured" class="form-check-label"></label>
+        </div>
+        <div class="form-check form-switch mb-3">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label asp-for="IsActive" class="form-check-label"></label>
+        </div>
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+}

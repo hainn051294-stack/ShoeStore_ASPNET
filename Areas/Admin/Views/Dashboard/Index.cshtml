@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <span class="stat-label">Doanh thu</span>
+            <strong>@FormatHelper.Vnd((decimal)ViewBag.TotalRevenue)</strong>
+            <i class="bi bi-currency-dollar"></i>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <span class="stat-label">Đơn hàng</span>
+            <strong>@ViewBag.TotalOrders</strong>
+            <i class="bi bi-receipt"></i>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <span class="stat-label">Sản phẩm</span>
+            <strong>@ViewBag.TotalProducts</strong>
+            <i class="bi bi-box"></i>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <span class="stat-label">Khách hàng</span>
+            <strong>@ViewBag.TotalCustomers</strong>
+            <i class="bi bi-people"></i>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <h5>Doanh thu 6 tháng gần nhất</h5>
+            <canvas id="revenueChart" height="110"></canvas>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h5><i class="bi bi-exclamation-triangle"></i> Sắp hết hàng</h5>
+            @foreach (var p in ViewBag.LowStockProducts)
+            {
+                <div class="d-flex justify-content-between border-bottom py-2">
+                    <span>@p.Name</span>
+                    <span class="badge @(p.Stock <= 5 ? "bg-danger" : "bg-warning text-dark")">Còn @p.Stock</span>
+                </div>
+            }
+            <a asp-controller="Products" asp-action="Index" class="btn btn-sm btn-outline-primary mt-2">Quản lý sản phẩm</a>
+        </div>
+    </div>
+</div>
+
+<div class="admin-card">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Đơn hàng gần đây</h5>
+        <span class="badge bg-warning text-dark">@ViewBag.PendingOrders đơn chờ xác nhận</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table admin-table">
+            <thead><tr><th>Mã đơn</th><th>Khách hàng</th><th>Ngày đặt</th><th>Tổng tiền</th><th>Trạng thái</th></tr></thead>
+            <tbody>
+                @foreach (var o in ViewBag.RecentOrders)
+                {
+                    <tr>
+                        <td><a asp-controller="Orders" asp-action="Details" asp-route-id="@o.Id">@o.OrderCode</a></td>
+                        <td>@o.User.FullName</td>
+                        <td>@(o.CreatedAt.ToString("dd/MM/yyyy"))</td>
+                        <td>@FormatHelper.Vnd(o.TotalAmount)</td>
+                        <td><span class="badge @FormatHelper.StatusClass(o.Status)">@FormatHelper.StatusText(o.Status)</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ChartLabels)),
+                datasets: [{
+                    label: 'Doanh thu (₫)',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ChartData)),
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124,58,237,.12)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+    </script>
+}

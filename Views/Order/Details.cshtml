@@ -17,7 +17,7 @@
         {
             <p class="text-muted"><em>Ghi chú: @Model.Note</em></p>
         }
-        <p class="text-muted small">Đặt lúc @Model.CreatedAt:dd/MM/yyyy HH:mm — Thanh toán: @Model.PaymentMethod</p>
+        <p class="text-muted small">Đặt lúc @(Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")) — Thanh toán: @Model.PaymentMethod</p>
         <hr />
         <h6>Sản phẩm</h6>
         @foreach (var d in Model.Details)

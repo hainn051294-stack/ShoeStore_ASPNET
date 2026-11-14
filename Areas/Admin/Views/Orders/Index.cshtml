@@ -1,0 +1,39 @@
+@model List<Order>
+@{
+    ViewData["Title"] = "Đơn hàng";
+    var statusFilter = (OrderStatus?)ViewBag.StatusFilter;
+}
+
+<form method="get" class="d-flex gap-2 mb-3">
+    <input type="text" name="q" value="@ViewBag.SearchTerm" class="form-control" placeholder="Tìm mã đơn / tên / SĐT..." />
+    <select name="status" class="form-select" style="max-width: 220px;">
+        <option value="">Tất cả trạng thái</option>
+        @foreach (var opt in FormatHelper.StatusOptions(statusFilter))
+        {
+            <option value="@opt.Value" selected="@opt.Selected">@opt.Text</option>
+        }
+    </select>
+    <button class="btn btn-outline-primary">Lọc</button>
+</form>
+
+<div class="admin-card">
+    <div class="table-responsive">
+        <table class="table admin-table">
+            <thead><tr><th>Mã đơn</th><th>Khách hàng</th><th>SĐT</th><th>Ngày đặt</th><th>Tổng tiền</th><th>Trạng thái</th><th></th></tr></thead>
+            <tbody>
+                @foreach (var o in Model)
+                {
+                    <tr>
+                        <td>@o.OrderCode</td>
+                        <td>@o.User.FullName</td>
+                        <td>@o.Phone</td>
+                        <td>@(o.CreatedAt.ToString("dd/MM/yyyy HH:mm"))</td>
+                        <td>@FormatHelper.Vnd(o.TotalAmount)</td>
+                        <td><span class="badge @FormatHelper.StatusClass(o.Status)">@FormatHelper.StatusText(o.Status)</span></td>
+                        <td><a asp-action="Details" asp-route-id="@o.Id" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

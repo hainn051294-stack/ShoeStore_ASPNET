@@ -1,0 +1,54 @@
+@model Order
+@{
+    ViewData["Title"] = "Đơn hàng " + Model.OrderCode;
+    var statusOptions = (IEnumerable<SelectListItem>)ViewBag.StatusOptions;
+}
+
+<div class="admin-card" style="max-width: 820px;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">@Model.OrderCode</h4>
+        <span class="badge @FormatHelper.StatusClass(Model.Status)">@FormatHelper.StatusText(Model.Status)</span>
+    </div>
+    <hr />
+    <h6>Khách hàng</h6>
+    <p class="mb-1"><strong>@Model.User.FullName</strong> (@Model.User.Email)</p>
+    <p class="text-muted mb-1">Người nhận: <strong>@Model.ReceiverName</strong> — @Model.Phone</p>
+    <p class="text-muted mb-1">Địa chỉ: @Model.Address</p>
+    @if (!string.IsNullOrEmpty(Model.Note))
+    {
+        <p class="text-muted"><em>Ghi chú: @Model.Note</em></p>
+    }
+    <p class="text-muted small">Đặt lúc @(Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")) — Thanh toán: @Model.PaymentMethod</p>
+    <hr />
+    <h6>Chi tiết đơn hàng</h6>
+    <table class="table admin-table">
+        <thead><tr><th>Sản phẩm</th><th>Biến thể</th><th>Đơn giá</th><th>SL</th><th>Tạm tính</th></tr></thead>
+        <tbody>
+            @foreach (var d in Model.Details)
+            {
+                <tr>
+                    <td>
+                        @d.ProductName
+                        <small class="text-muted d-block">@(d.Product?.Category?.Name ?? "")</small>
+                    </td>
+                    <td>@(d.Color != null ? d.Color + " " : "")@(d.Size != null ? "size " + d.Size : "")</td>
+                    <td>@FormatHelper.Vnd(d.UnitPrice)</td>
+                    <td>@d.Quantity</td>
+                    <td>@FormatHelper.Vnd(d.LineTotal)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="summary-row total">
+        <span>Tổng cộng</span>
+        <strong class="text-gradient">@FormatHelper.Vnd(Model.TotalAmount)</strong>
+    </div>
+    <hr />
+    <form asp-action="UpdateStatus" method="post" class="d-flex gap-2">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.Id" />
+        <select name="status" class="form-select" asp-items="statusOptions"></select>
+        <button type="submit" class="btn btn-primary">Cập nhật trạng thái</button>
+        </form>
+    <a asp-action="Index" class="btn btn-outline-secondary mt-3">← Danh sách đơn hàng</a>
+</div>

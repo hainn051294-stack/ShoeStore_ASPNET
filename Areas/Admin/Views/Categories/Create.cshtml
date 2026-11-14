@@ -1,0 +1,38 @@
+@model Category
+@{
+    ViewData["Title"] = "Thêm thương hiệu";
+}
+
+<div class="admin-card" style="max-width: 640px;">
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="VD: Nike" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Icon" class="form-label"></label>
+            <input asp-for="Icon" class="form-control" placeholder="bi-lightning-charge (Bootstrap Icons)" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DisplayOrder" class="form-label"></label>
+            <input asp-for="DisplayOrder" class="form-control" type="number" />
+        </div>
+        <div class="form-check form-switch mb-3">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label asp-for="IsActive" class="form-check-label"></label>
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm mới</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+}
