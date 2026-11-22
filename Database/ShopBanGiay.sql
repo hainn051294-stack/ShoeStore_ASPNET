@@ -463,3 +463,23 @@ INSERT INTO ProductImages (Url, Color, DisplayOrder, ProductId) VALUES (N'/image
 INSERT INTO ProductImages (Url, Color, DisplayOrder, ProductId) VALUES (N'/images/products/skechers-summits-quick-getaway-blue/2.jpg', N'Xanh dương', 6, (SELECT Id FROM Products WHERE Slug = N'skechers-summits-quick-getaway'));
 INSERT INTO ProductImages (Url, Color, DisplayOrder, ProductId) VALUES (N'/images/products/skechers-summits-quick-getaway-blue/3.jpg', N'Xanh dương', 7, (SELECT Id FROM Products WHERE Slug = N'skechers-summits-quick-getaway'));
 INSERT INTO ProductImages (Url, Color, DisplayOrder, ProductId) VALUES (N'/images/products/skechers-summits-quick-getaway-blue/4.jpg', N'Xanh dương', 8, (SELECT Id FROM Products WHERE Slug = N'skechers-summits-quick-getaway'));
+
+-- ===== Đơn hàng mẫu (data mua hàng) =====
+INSERT INTO Orders (OrderCode, UserId, ReceiverName, Phone, Address, TotalAmount, Status, PaymentMethod, CreatedAt) VALUES
+(N'ORD20261119161555', N'321de960-ab68-497e-9681-1bb80e53baea', N'Nguyễn Nam Hải', N'0901238888', N'273 An Dương Vương, Quận 5, TP. Hồ Chí Minh', 14860000, 3, N'COD', '2026-11-19 16:15:55'),
+(N'ORD20261119161659', N'321de960-ab68-497e-9681-1bb80e53baea', N'Nguyễn Nam Hải', N'0901238888', N'273 An Dương Vương, Quận 5, TP. Hồ Chí Minh', 16460000, 3, N'COD', '2026-11-19 16:16:59'),
+(N'ORD20261119161920', N'321de960-ab68-497e-9681-1bb80e53baea', N'Nguyễn Nam Hải', N'0901238888', N'273 An Dương Vương, Quận 5, TP. Hồ Chí Minh', 3580000, 0, N'COD', '2026-11-19 16:19:20'),
+(N'ORD20261119163531', N'321de960-ab68-497e-9681-1bb80e53baea', N'Nguyễn Nam Hải', N'0901234567', N'273 An Dương Vương, Quận 5, TP. Hồ Chí Minh', 3680000, 0, N'COD', '2026-11-19 16:35:31');
+
+INSERT INTO OrderDetails (OrderId, ProductId, ProductName, ProductImage, Color, Size, Quantity, UnitPrice) VALUES
+(1, (SELECT Id FROM Products WHERE Slug = N'nike-air-force-1-07'), N'Nike Air Force 1 ''07', N'/images/products/nike-air-force-1-07-black/1.jpg', NULL, NULL, 1, 2890000),
+(1, (SELECT Id FROM Products WHERE Slug = N'adidas-ultraboost-22'), N'Adidas Ultraboost 22', N'/images/products/adidas-ultraboost-22-black/1.jpg', NULL, NULL, 1, 5190000),
+(1, (SELECT Id FROM Products WHERE Slug = N'puma-suede-classic-xxi'), N'Puma Suede Classic XXI', N'/images/products/puma-suede-classic-xxi-black/1.jpg', N'Đen', N'43', 1, 2290000),
+(1, (SELECT Id FROM Products WHERE Slug = N'nike-air-max-270'), N'Nike Air Max 270', N'/images/products/nike-air-max-270-black/1.jpg', N'Đen', N'43', 1, 4490000),
+(2, (SELECT Id FROM Products WHERE Slug = N'air-jordan-4-retro'), N'Air Jordan 4 Retro', N'/images/products/air-jordan-4-retro-pink/1.jpg', NULL, NULL, 1, 7490000),
+(2, (SELECT Id FROM Products WHERE Slug = N'new-balance-550'), N'New Balance 550', N'/images/products/new-balance-550-pink/1.jpg', N'Hồng', N'43', 2, 3090000),
+(2, (SELECT Id FROM Products WHERE Slug = N'converse-run-star-hike'), N'Converse Run Star Hike', N'/images/products/converse-run-star-hike-black/1.jpg', N'Đen', N'43', 1, 2790000),
+(3, (SELECT Id FROM Products WHERE Slug = N'adidas-stan-smith'), N'Adidas Stan Smith', N'/images/products/adidas-stan-smith-black/1.jpg', N'Đen', N'43', 1, 2190000),
+(3, (SELECT Id FROM Products WHERE Slug = N'converse-chuck-taylor-all-star-classic'), N'Converse Chuck Taylor All Star Classic', N'/images/products/converse-chuck-taylor-all-star-classic-black/1.jpg', N'Đen', N'43', 1, 1390000),
+(4, (SELECT Id FROM Products WHERE Slug = N'vans-old-skool'), N'Vans Old Skool', N'/images/products/vans-old-skool-black/1.jpg', N'Đen', N'43', 1, 1690000),
+(4, (SELECT Id FROM Products WHERE Slug = N'skechers-dlites-40'), N'Skechers D''Lites 4.0', N'/images/products/skechers-dlites-40-black/1.jpg', N'Đen', N'43', 1, 1990000);

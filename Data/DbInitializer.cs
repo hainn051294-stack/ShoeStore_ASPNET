@@ -27,7 +27,7 @@ public static class DbInitializer
 
         await SeedCategoriesAsync(db);
         await SeedProductsAsync(db);
-        await SeedDemoOrderAsync(db, user);
+        await SeedOrdersAsync(db, user);
     }
 
     private static async Task EnsureRoleAsync(RoleManager<IdentityRole> roleManager, string name)
@@ -170,39 +170,62 @@ public static class DbInitializer
         await db.SaveChangesAsync();
     }
 
-    private static async Task SeedDemoOrderAsync(ApplicationDbContext db, ApplicationUser user)
+    private static async Task SeedOrdersAsync(ApplicationDbContext db, ApplicationUser user)
     {
-        var products = await db.Products.Take(2).ToListAsync();
-        if (products.Count < 2) return;
+        var products = await db.Products.ToDictionaryAsync(p => p.Id);
 
-        var order = new Order
+        Order NewOrder(string code, int status, string created, decimal total) => new()
         {
-            OrderCode = $"ORD{DateTime.Now:yyyyMMddHHmmss}DEMO",
+            OrderCode = code,
             UserId = user.Id,
             ReceiverName = user.FullName,
-            Phone = user.PhoneNumber ?? "0901234567",
-            Address = user.Address ?? "TP. Hồ Chí Minh",
-            Status = OrderStatus.Completed,
+            Phone = "0901238888",
+            Address = user.Address ?? "273 An Dương Vương, Quận 5, TP. Hồ Chí Minh",
+            Status = (OrderStatus)status,
             PaymentMethod = "COD",
-            CreatedAt = DateTime.Now.AddDays(-7)
+            CreatedAt = DateTime.Parse(created),
+            TotalAmount = total
         };
 
-        foreach (var p in products)
+        void AddDetail(Order order, int productId, string? color, string? size, int qty, decimal price)
         {
+            var p = products[productId];
             order.Details.Add(new OrderDetail
             {
                 ProductId = p.Id,
                 ProductName = p.Name,
                 ProductImage = p.MainImage,
-                Color = "Đen",
-                Size = "41",
-                Quantity = 1,
-                UnitPrice = p.DisplayPrice
+                Color = color,
+                Size = size,
+                Quantity = qty,
+                UnitPrice = price
             });
         }
 
-        order.TotalAmount = order.Details.Sum(d => d.UnitPrice * d.Quantity);
-        db.Orders.Add(order);
+        // Đơn 1 — Hoàn thành: AF1 + Ultraboost 22 + Puma Suede + Air Max 270
+        var o1 = NewOrder("ORD20261119161555", 3, "2026-11-19 16:15:55", 14_860_000m);
+        AddDetail(o1, 1, null, null, 1, 2_890_000m);
+        AddDetail(o1, 4, null, null, 1, 5_190_000m);
+        AddDetail(o1, 8, "Đen", "43", 1, 2_290_000m);
+        AddDetail(o1, 2, "Đen", "43", 1, 4_490_000m);
+
+        // Đơn 2 — Hoàn thành: Air Jordan 4 + NB 550 (x2) + Converse Run Star Hike
+        var o2 = NewOrder("ORD20261119161659", 3, "2026-11-19 16:16:59", 16_460_000m);
+        AddDetail(o2, 16, null, null, 1, 7_490_000m);
+        AddDetail(o2, 9, "Hồng", "43", 2, 3_090_000m);
+        AddDetail(o2, 14, "Đen", "43", 1, 2_790_000m);
+
+        // Đơn 3 — Chờ xác nhận: Stan Smith + Chuck Taylor Classic
+        var o3 = NewOrder("ORD20261119161920", 0, "2026-11-19 16:19:20", 3_580_000m);
+        AddDetail(o3, 5, "Đen", "43", 1, 2_190_000m);
+        AddDetail(o3, 13, "Đen", "43", 1, 1_390_000m);
+
+        // Đơn 4 — Chờ xác nhận: Vans Old Skool + Skechers D'Lites 4.0
+        var o4 = NewOrder("ORD20261119163531", 0, "2026-11-19 16:35:31", 3_680_000m);
+        AddDetail(o4, 11, "Đen", "43", 1, 1_690_000m);
+        AddDetail(o4, 17, "Đen", "43", 1, 1_990_000m);
+
+        db.Orders.AddRange(o1, o2, o3, o4);
         await db.SaveChangesAsync();
     }
 }

@@ -64,6 +64,10 @@
         <table class="table admin-table">
             <thead><tr><th>Mã đơn</th><th>Khách hàng</th><th>Ngày đặt</th><th>Tổng tiền</th><th>Trạng thái</th></tr></thead>
             <tbody>
+                @if (!Enumerable.Any(ViewBag.RecentOrders))
+                {
+                    <tr><td colspan="5" class="text-center text-muted py-4">Chưa có đơn hàng nào</td></tr>
+                }
                 @foreach (var o in ViewBag.RecentOrders)
                 {
                     <tr>
