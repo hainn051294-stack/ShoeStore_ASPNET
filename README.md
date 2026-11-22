@@ -12,7 +12,7 @@
 
 1. **Yêu cầu:** Visual Studio 2022 17.8+ (có .NET 8 SDK). SQL Server LocalDB có sẵn khi cài Visual Studio.
 2. Mở **`ShopBanGiay.sln`** → bấm **F5**.
-3. Trình duyệt tự mở `http://localhost:5247` — database `ShopBanGiayDb` được **tự tạo + tự seed** lần đầu chạy:
+3. Trình duyệt tự mở `https://localhost:7187` — database `ShopBanGiayDb` được **tự tạo + tự seed** lần đầu chạy:
 
 | Dữ liệu tự sinh | Số lượng |
 | --- | --- |
