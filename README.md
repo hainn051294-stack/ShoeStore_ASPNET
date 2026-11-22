@@ -19,7 +19,7 @@
 | Danh mục | 8 |
 | Sản phẩm (+144 ảnh thật trong `wwwroot`) | 18 |
 | Tài khoản demo | 2 (admin + khách hàng) |
-| Đơn hàng mẫu | 1 |
+| Đơn hàng mẫu | 3 |
 
 ### Tài khoản demo
 
